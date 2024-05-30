@@ -4,31 +4,21 @@ import java.util.Date;
 
 public class RepoEntity {
     private String projectName;
-    private Long initialCommit;
-    private Long initialBranch;
-    private Long activeCommit;
-    private Long activeBranch;
+    private String initialCommit;
+    private String initialBranch;
+    private String activeCommit;
+    private String activeBranch;
     private String createdBy;
     private Date createdAt;
-
-    public RepoEntity(String projectName, Long initialCommit, Long initialBranch, Long activeCommit, Long activeBranch, String createdBy, Date createdAt) {
-        this.projectName = projectName;
-        this.initialCommit = initialCommit;
-        this.initialBranch = initialBranch;
-        this.activeCommit = activeCommit;
-        this.activeBranch = activeBranch;
-        this.createdBy = createdBy;
-        this.createdAt = createdAt;
-    }
 
     @Override
     public String toString() {
         return "RepoEntity{" +
                 "projectName='" + projectName + '\'' +
-                ", initialCommit=" + initialCommit +
-                ", initialBranch=" + initialBranch +
-                ", activeCommit=" + activeCommit +
-                ", activeBranch=" + activeBranch +
+                ", initialCommit='" + initialCommit + '\'' +
+                ", initialBranch='" + initialBranch + '\'' +
+                ", activeCommit='" + activeCommit + '\'' +
+                ", activeBranch='" + activeBranch + '\'' +
                 ", createdBy='" + createdBy + '\'' +
                 ", createdAt=" + createdAt +
                 '}';
@@ -42,35 +32,35 @@ public class RepoEntity {
         this.projectName = projectName;
     }
 
-    public Long getInitialCommit() {
+    public String getInitialCommit() {
         return initialCommit;
     }
 
-    public void setInitialCommit(Long initialCommit) {
+    public void setInitialCommit(String initialCommit) {
         this.initialCommit = initialCommit;
     }
 
-    public Long getInitialBranch() {
+    public String getInitialBranch() {
         return initialBranch;
     }
 
-    public void setInitialBranch(Long initialBranch) {
+    public void setInitialBranch(String initialBranch) {
         this.initialBranch = initialBranch;
     }
 
-    public Long getActiveCommit() {
+    public String getActiveCommit() {
         return activeCommit;
     }
 
-    public void setActiveCommit(Long activeCommit) {
+    public void setActiveCommit(String activeCommit) {
         this.activeCommit = activeCommit;
     }
 
-    public Long getActiveBranch() {
+    public String getActiveBranch() {
         return activeBranch;
     }
 
-    public void setActiveBranch(Long activeBranch) {
+    public void setActiveBranch(String activeBranch) {
         this.activeBranch = activeBranch;
     }
 

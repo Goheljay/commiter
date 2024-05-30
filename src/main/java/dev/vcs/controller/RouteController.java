@@ -1,5 +1,8 @@
 package dev.vcs.controller;
 
+import dev.vcs.service.RepoService;
+import dev.vcs.serviceImpl.RepoServiceImpl;
+
 import java.io.File;
 import java.util.Scanner;
 
@@ -24,8 +27,12 @@ public class RouteController {
        while(true){
            System.out.println("1. Initialize = init\n2. Commit = commit\n3. Create Branch = branches");
            String  choice = scanner.next();
+           RepoService repoService = RepoServiceImpl.getInstance();
            switch (choice) {
                case "init":
+                   System.out.println("Enter creator Name");
+                   String creatorName = scanner.next();
+                   repoService.initializeTheRepo(path, creatorName);
                    return;
                case "commit":
                    return;

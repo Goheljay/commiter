@@ -18,13 +18,6 @@ public class BranchModal {
                 '}';
     }
 
-    public BranchModal(String id, String branchName, String parentBranchId, Date createdAt) {
-        this.id = id;
-        this.branchName = branchName;
-        this.parentBranchId = parentBranchId;
-        this.createdAt = createdAt;
-    }
-
     public String getId() {
         return id;
     }

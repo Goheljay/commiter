@@ -2,6 +2,10 @@ package dev.vcs;
 
 import dev.vcs.controller.RouteController;
 
+import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.UUID;
 
 /**
@@ -11,12 +15,19 @@ import java.util.UUID;
 public class App 
 {
 
-    public static void main( String[] args ) {
-        System.out.println( "Show Main Options::::::" );
-
+    public static void main( String[] args ) throws Exception {
         UUID  uuid = UUID.randomUUID();
         System.out.println(uuid);
 
+//        String currentPath = System.getProperty("user.dir");
+//        System.out.println(currentPath);
+//
+//        File rootDir = new File(currentPath);
+        System.out.println("done..................");
+//        File kuFlexDir = new File(rootDir, ".commiter");
+//        if (!kuFlexDir.mkdir()) {
+//            throw new Exception("Failed to create " + ".commiter" + " repository folder");
+//        }
         System.out.println(args[0]);
         RouteController menus = RouteController.getInstance();
 
