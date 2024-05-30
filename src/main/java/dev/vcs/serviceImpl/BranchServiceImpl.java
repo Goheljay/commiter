@@ -21,9 +21,7 @@ public class BranchServiceImpl implements BranchService {
 
     @Override
     public String createBranch(String path) throws IOException {
-        StringBuilder rootDir = new StringBuilder();
-        rootDir.append(path).append("/.commiter");
-        File brnachFile = new File(rootDir.toString(),"BranchDB.json");
+        File brnachFile = new File(path,"BranchDB.json");
         if (!brnachFile.createNewFile()) {
             throw new RuntimeException("Failed to create branch File");
         }

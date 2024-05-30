@@ -33,11 +33,11 @@ public class RouteController {
                    System.out.println("Enter creator Name");
                    String creatorName = scanner.next();
                    repoService.initializeTheRepo(path, creatorName);
-                   return;
+                   break;
                case "commit":
-                   return;
+                   break;
                case "branches":
-                   return;
+                   break;
                default:
                    System.out.println("No commands found with "+choice+" Name");
 

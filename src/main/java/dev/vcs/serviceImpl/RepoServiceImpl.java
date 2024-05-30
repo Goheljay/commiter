@@ -23,23 +23,33 @@ public class RepoServiceImpl implements RepoService {
     @Override
     public void initializeTheRepo(String path, String creatorName) {
         DirService dirService = DirServiceImpl.getInstance();
-
+        FileRService fileRService = FileRServiceImpl.getInstance();
         //created .commiter Folder
         dirService.createFolder(path, ".commiter");
-
+        var rootPath = path+"/.commiter";
         //create Diff Directory
-        dirService.createFolder(path+"/.commiter", "diffs");
-
+        dirService.createFolder(rootPath, "diffs");
 
         // create Branch
         BranchService branchService = BranchServiceImpl.getInstance();
-        String branch = null;
+        String branchId = null;
         try {
-            branch = branchService.createBranch(path);
+            branchId = branchService.createBranch(rootPath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //create Branches folder
+        dirService.createFolder(rootPath, "branches");
+        //create branchId Folder
+        dirService.createFolder(rootPath+"/branches", branchId);
+        //create CommitDb File
+        fileRService.createRepoFile(path, null);
+        //create Repo File
+        RepoEntity repoEntity = generateRepoEntity(creatorName, branchId);
+        fileRService.createRepoFile(path, repoEntity);
+    }
 
+    private RepoEntity generateRepoEntity(String creatorName, String branch) {
         RepoEntity repoEntity = new RepoEntity();
         repoEntity.setCreatedAt(new Date());
         repoEntity.setCreatedBy(creatorName);
@@ -48,9 +58,6 @@ public class RepoServiceImpl implements RepoService {
         repoEntity.setActiveCommit(null);
         repoEntity.setInitialCommit(null);
         repoEntity.setProjectName("commiter");
-
-        //create Repo File
-        FileRService fileRService = FileRServiceImpl.getInstance();
-        fileRService.createRepoFile(path, repoEntity);
+        return repoEntity;
     }
 }

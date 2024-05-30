@@ -25,7 +25,7 @@ public class FileRServiceImpl implements FileRService {
 
     @Override
     public void createRepoFile(String path, RepoEntity repoEntity ) {
-        File createFile = new File(path+"/.commiter","commiterRepo.json");
+        File createFile = new File(path+"/.commiter","Repo.json");
         try {
             if (!createFile.createNewFile()){
                 throw new FileAlreadyExistsException("File already Exists");
@@ -36,12 +36,9 @@ public class FileRServiceImpl implements FileRService {
 
         try (FileWriter commiterRepoWriter = new FileWriter(createFile)) {
             String repoEntityJson = new Gson().toJson(repoEntity);
-            log.info("Stored data::: {}"+ repoEntityJson);
             commiterRepoWriter.write(repoEntityJson);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }
