@@ -27,26 +27,20 @@ public class RepoServiceImpl implements RepoService {
         //created .commiter Folder
         dirService.createFolder(path, ".commiter");
         var rootPath = path+"/.commiter";
-        //create Diff Directory
-        dirService.createFolder(rootPath, "diffs");
-
         // create Branch
         BranchService branchService = BranchServiceImpl.getInstance();
-        String branchId = null;
-        try {
-            branchId = branchService.createBranch(rootPath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String branchId = branchService.createBranch(rootPath);
         //create Branches folder
         dirService.createFolder(rootPath, "branches");
         //create branchId Folder
         dirService.createFolder(rootPath+"/branches", branchId);
+        //create Diff Folder
+        dirService.createFolder(rootPath, "diffs");
         //create CommitDb File
         fileRService.createRepoFile(path, null);
         //create Repo File
         RepoEntity repoEntity = generateRepoEntity(creatorName, branchId);
-        fileRService.createRepoFile(path, repoEntity);
+        fileRService.createRepoFile(path, repoEntity); // need to add If FIle Exist then call file edit fun...
     }
 
     private RepoEntity generateRepoEntity(String creatorName, String branch) {

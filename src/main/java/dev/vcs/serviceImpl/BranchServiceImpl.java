@@ -20,10 +20,14 @@ public class BranchServiceImpl implements BranchService {
     }
 
     @Override
-    public String createBranch(String path) throws IOException {
+    public String createBranch(String path) {
         File brnachFile = new File(path,"BranchDB.json");
-        if (!brnachFile.createNewFile()) {
-            throw new RuntimeException("Failed to create branch File");
+        try {
+            if (!brnachFile.createNewFile()) {
+                throw new RuntimeException("Failed to create branch File");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         UUID branchId = UUID.randomUUID();
         BranchModal branchModal = new BranchModal();

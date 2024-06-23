@@ -19,11 +19,11 @@ public class DirServiceImpl implements DirService {
         //create commiter Repository
         File rootDir = new File(path);
         if (!rootDir.isDirectory()) {
-            throw new RuntimeException("Is Not folder");
+            throw new RuntimeException("Is Not folder"); // folder is Not found
         }
         File createFolderPath = new File(path, s);
         if (!createFolderPath.mkdir()){
-            throw new RuntimeException("Folder already exists");
+            throw new RuntimeException("Folder already exists"); // folder creation failed
         }
     }
 }
