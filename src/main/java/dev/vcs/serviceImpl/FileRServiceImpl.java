@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import dev.vcs.entity.RepoEntity;
 import dev.vcs.service.FileRService;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.Date;
 import java.util.logging.Logger;
@@ -25,10 +23,11 @@ public class FileRServiceImpl implements FileRService {
 
     @Override
     public void createRepoFile(String path, RepoEntity repoEntity ) {
-        File createFile = new File(path+"/.commiter","Repo.json");
+        File createFile = new File(path,"Repo.json");
         try {
             if (!createFile.createNewFile()){
-                throw new FileAlreadyExistsException("File already Exists");
+                this.updateTheRepoFile(path+"/Repo.json", repoEntity);
+                return;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -41,4 +40,11 @@ public class FileRServiceImpl implements FileRService {
             throw new RuntimeException(e);
         }
     }
+
+    private void updateTheRepoFile(String path, RepoEntity repoEntity) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
+        String repoFileJson = bufferedReader.readLine();
+        System.out.println("repo File :::::" + repoFileJson);
+    }
+
 }

@@ -1,16 +1,17 @@
 package dev.vcs.serviceImpl;
 
 import dev.vcs.entity.RepoEntity;
-import dev.vcs.service.BranchService;
-import dev.vcs.service.DirService;
-import dev.vcs.service.FileRService;
-import dev.vcs.service.RepoService;
+import dev.vcs.entity.SnapshotDetailsEntity;
+import dev.vcs.service.*;
+import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class RepoServiceImpl implements RepoService {
+    private static final Logger log = Logger.getLogger(RepoServiceImpl.class);
     private static RepoServiceImpl obj = null;
 
     public static synchronized RepoServiceImpl getInstance() {
@@ -37,10 +38,13 @@ public class RepoServiceImpl implements RepoService {
         //create Diff Folder
         dirService.createFolder(rootPath, "diffs");
         //create CommitDb File
-        fileRService.createRepoFile(path, null);
+        fileRService.createRepoFile(rootPath, new RepoEntity());
         //create Repo File
         RepoEntity repoEntity = generateRepoEntity(creatorName, branchId);
-        fileRService.createRepoFile(path, repoEntity); // need to add If FIle Exist then call file edit fun...
+        fileRService.createRepoFile(rootPath, repoEntity);
+        //Manage the SnapDbJson file
+        SnapDbService snapDbService = SnapDbServiceImpl.getInstance();
+        snapDbService.addFirstFlowOfFiles(path);
     }
 
     private RepoEntity generateRepoEntity(String creatorName, String branch) {
