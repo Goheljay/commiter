@@ -23,7 +23,6 @@ public class App
 //        System.out.println(currentPath);
 //
 //        File rootDir = new File(currentPath);
-        System.out.println("done..................");
 //        File kuFlexDir = new File(rootDir, ".commiter");
 //        if (!kuFlexDir.mkdir()) {
 //            throw new Exception("Failed to create " + ".commiter" + " repository folder");
