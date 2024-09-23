@@ -1,14 +1,11 @@
 package dev.vcs.serviceImpl;
 
+import dev.vcs.entity.commit.CommitEntity;
 import dev.vcs.entity.RepoEntity;
-import dev.vcs.entity.SnapshotDetailsEntity;
 import dev.vcs.service.*;
 import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class RepoServiceImpl implements RepoService {
     private static final Logger log = Logger.getLogger(RepoServiceImpl.class);
@@ -38,7 +35,9 @@ public class RepoServiceImpl implements RepoService {
         //create Diff Folder
         dirService.createFolder(rootPath, "diffs");
         //create CommitDb File
-        fileRService.createRepoFile(rootPath, new RepoEntity());
+        CommitEntity commitEntity = generateCommit(branchId);
+        CommitService commitService = CommitServiceImpl.getInstance();
+        commitService.initialCommit(rootPath, commitEntity);
         //create Repo File
         RepoEntity repoEntity = generateRepoEntity(creatorName, branchId);
         fileRService.createRepoFile(rootPath, repoEntity);
@@ -57,5 +56,9 @@ public class RepoServiceImpl implements RepoService {
         repoEntity.setInitialCommit(null);
         repoEntity.setProjectName("commiter");
         return repoEntity;
+    }
+
+    private CommitEntity generateCommit(String branchId) {
+        return new CommitEntity("Initial Commit",branchId,new ArrayList<>(), new Date());
     }
 }

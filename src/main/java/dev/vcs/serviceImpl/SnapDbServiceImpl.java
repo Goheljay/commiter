@@ -18,7 +18,7 @@ public class SnapDbServiceImpl implements SnapDbService {
 
     @Override
     public void addFirstFlowOfFiles(String path) {
-        getProjectFileSnapshot(path);
+        getProjectFileSnapshot(path).forEach(System.out::println);
     }
     private List<String> getProjectFileSnapshot(String path) {
         List<String> filePaths = getProjectFilesPath(path);

@@ -17,7 +17,6 @@ public class RouteController {
        return obj;
    }
 
-
    public void showAllMenus(String path) {
        if (!new File(path).isDirectory()) {
            System.out.println("Invalid Path argument : " + path);

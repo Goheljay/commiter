@@ -24,14 +24,13 @@ public class FileRServiceImpl implements FileRService {
     @Override
     public void createRepoFile(String path, RepoEntity repoEntity ) {
         File createFile = new File(path,"Repo.json");
-        try {
-            if (!createFile.createNewFile()){
-                this.updateTheRepoFile(path+"/Repo.json", repoEntity);
-                return;
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            if (!createFile.createNewFile()){
+//                this.updateTheRepoFile(path+"/Repo.json", repoEntity);
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
         try (FileWriter commiterRepoWriter = new FileWriter(createFile)) {
             String repoEntityJson = new Gson().toJson(repoEntity);

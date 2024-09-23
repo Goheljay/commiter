@@ -1,4 +1,4 @@
-package dev.vcs.entity;
+package dev.vcs.entity.commit;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,8 +22,8 @@ public class CommitEntity {
                 '}';
     }
 
-    public CommitEntity(UUID id, String commitMessage, String branchId, ArrayList<String> parentCommitId, Date createdAt) {
-        this.id = id;
+    public CommitEntity(String commitMessage, String branchId, ArrayList<String> parentCommitId, Date createdAt) {
+        this.id = UUID.randomUUID();;
         this.commitMessage = commitMessage;
         this.branchId = branchId;
         this.parentCommitId = parentCommitId;
