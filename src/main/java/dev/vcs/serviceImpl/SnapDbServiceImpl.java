@@ -1,5 +1,6 @@
 package dev.vcs.serviceImpl;
 
+import dev.vcs.entity.SnapshotDetailsEntity;
 import dev.vcs.service.SnapDbService;
 
 import java.io.File;
@@ -17,14 +18,20 @@ public class SnapDbServiceImpl implements SnapDbService {
     }
 
     @Override
-    public void addFirstFlowOfFiles(String path) {
-        getProjectFileSnapshot(path).forEach(System.out::println);
+    public void addFirstFlowOfFiles(String path, SnapshotDetailsEntity snapShotDbDto) {
+        List<String> projectFileSnapshot = getProjectFileSnapshot(path);
+        generateSnapShotDBFile(path, snapShotDbDto);
     }
+
+    private void generateSnapShotDBFile(String path, SnapshotDetailsEntity snapShotDbDto) {
+
+    }
+
     private List<String> getProjectFileSnapshot(String path) {
         List<String> filePaths = getProjectFilesPath(path);
         List<String> unwantedPaths = new ArrayList<>();
         filePaths.forEach(s -> {
-            if (s.contains("\\" + "./commiter")) {
+            if (s.contains("/.commiter")) {
                 unwantedPaths.add(s);
             }
         });

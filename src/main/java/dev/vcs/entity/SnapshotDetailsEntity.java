@@ -9,6 +9,9 @@ public class SnapshotDetailsEntity {
     private String commitId;
     private String branchId;
 
+    public SnapshotDetailsEntity() {
+    }
+
     public SnapshotDetailsEntity(String id, ArrayList<String> files, String commitId, String branchId) {
         this.id = id;
         this.files = files;

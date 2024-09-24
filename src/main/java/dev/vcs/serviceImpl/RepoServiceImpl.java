@@ -1,5 +1,6 @@
 package dev.vcs.serviceImpl;
 
+import dev.vcs.entity.SnapshotDetailsEntity;
 import dev.vcs.entity.commit.CommitEntity;
 import dev.vcs.entity.RepoEntity;
 import dev.vcs.service.*;
@@ -43,7 +44,7 @@ public class RepoServiceImpl implements RepoService {
         fileRService.createRepoFile(rootPath, repoEntity);
         //Manage the SnapDbJson file
         SnapDbService snapDbService = SnapDbServiceImpl.getInstance();
-        snapDbService.addFirstFlowOfFiles(path);
+        snapDbService.addFirstFlowOfFiles(path, new SnapshotDetailsEntity());
     }
 
     private RepoEntity generateRepoEntity(String creatorName, String branch) {
