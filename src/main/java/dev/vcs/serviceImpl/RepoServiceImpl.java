@@ -32,19 +32,19 @@ public class RepoServiceImpl implements RepoService {
         //create Branches folder
         dirService.createFolder(rootPath, UtilsEnums.BRANCHES.getValue());
         //create branchId Folder
-        dirService.createFolder(rootPath+"/branches", branchId);
+        dirService.createFolder(rootPath+UtilsEnums.BRANCHES_ROUTE, branchId);
         //create Diff Folder
         dirService.createFolder(rootPath, UtilsEnums.DIFFS.getValue());
         //create CommitDb File
         CommitEntity commitEntity = generateCommit(branchId);
         CommitService commitService = CommitServiceImpl.getInstance();
         String commitId = commitService.initialCommit(rootPath, commitEntity);
-        //create Repo File
-        RepoEntity repoEntity = generateRepoEntity(creatorName, branchId, commitId);
-        fileRService.createRepoFile(rootPath, repoEntity);
         //Manage the SnapDbJson file
         SnapDbService snapDbService = SnapDbServiceImpl.getInstance();
         snapDbService.addFirstFlowOfFiles(path, branchId, commitId);
+        //create Repo File
+        RepoEntity repoEntity = generateRepoEntity(creatorName, branchId, commitId);
+        fileRService.createRepoFile(rootPath, repoEntity);
     }
 
     private RepoEntity generateRepoEntity(String creatorName, String branch, String commitId) {

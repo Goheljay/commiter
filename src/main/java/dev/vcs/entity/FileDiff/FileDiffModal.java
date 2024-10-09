@@ -1,9 +1,8 @@
-package dev.vcs.entity;
+package dev.vcs.entity.FileDiff;
 
 import dev.vcs.utils.MyUtils;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class FileDiffModal {
     private String id;
