@@ -1,17 +1,19 @@
 package dev.vcs.entity;
 
+import dev.vcs.utils.MyUtils;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class FileDiffModal {
-    private UUID id;
+    private String id;
     private ArrayList<String> diff;
     private String branchId;
     private String commitId;
     private Boolean isInitCommit;
 
-    public FileDiffModal(UUID id, ArrayList<String> diff, String branchId, String commitId, Boolean isInitCommit) {
-        this.id = id;
+    public FileDiffModal(ArrayList<String> diff, String branchId, String commitId, Boolean isInitCommit) {
+        this.id = MyUtils.generateSnapId(branchId, commitId);;
         this.diff = diff;
         this.branchId = branchId;
         this.commitId = commitId;
@@ -29,11 +31,11 @@ public class FileDiffModal {
                 '}';
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

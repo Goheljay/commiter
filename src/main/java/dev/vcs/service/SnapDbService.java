@@ -1,7 +1,5 @@
 package dev.vcs.service;
 
-import dev.vcs.entity.SnapshotDetailsEntity;
-
 public interface SnapDbService {
-    void addFirstFlowOfFiles(String path, SnapshotDetailsEntity snapShotDbDto);
+    void addFirstFlowOfFiles(String path, String branchId, String commitId);
 }

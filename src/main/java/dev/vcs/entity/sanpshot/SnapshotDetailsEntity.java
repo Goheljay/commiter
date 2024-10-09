@@ -1,19 +1,21 @@
-package dev.vcs.entity;
+package dev.vcs.entity.sanpshot;
 
-import java.util.ArrayList;
+import dev.vcs.utils.MyUtils;
+
+import java.util.List;
 
 public class SnapshotDetailsEntity {
     //branchId ... commitId
     private String id;
-    private ArrayList<String> files;
+    private List<String> files;
     private String commitId;
     private String branchId;
 
     public SnapshotDetailsEntity() {
     }
 
-    public SnapshotDetailsEntity(String id, ArrayList<String> files, String commitId, String branchId) {
-        this.id = id;
+    public SnapshotDetailsEntity(List<String> files, String commitId, String branchId) {
+        this.id = MyUtils.generateSnapId(branchId, commitId);
         this.files = files;
         this.commitId = commitId;
         this.branchId = branchId;
@@ -29,6 +31,8 @@ public class SnapshotDetailsEntity {
                 '}';
     }
 
+
+
     public String getId() {
         return id;
     }
@@ -37,11 +41,11 @@ public class SnapshotDetailsEntity {
         this.id = id;
     }
 
-    public ArrayList<String> getFiles() {
+    public List<String> getFiles() {
         return files;
     }
 
-    public void setFiles(ArrayList<String> files) {
+    public void setFiles(List<String> files) {
         this.files = files;
     }
 

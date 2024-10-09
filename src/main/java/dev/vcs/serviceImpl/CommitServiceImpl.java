@@ -21,12 +21,11 @@ public class CommitServiceImpl implements CommitService {
     }
 
     @Override
-    public void initialCommit(String rootPath, CommitEntity commitEntity) {
+    public String initialCommit(String rootPath, CommitEntity commitEntity) {
         File commitFile = new File(rootPath + "/branches/" + commitEntity.getBranchId() + "/commitsDb.json");
         CommitDb commitDB;
         try {
             if (!commitFile.exists()) {
-
                 commitFile.createNewFile();
                 commitDB = new CommitDb();
             } else {
@@ -38,6 +37,7 @@ public class CommitServiceImpl implements CommitService {
         commitDB.addCommit(commitEntity);
         try (FileWriter fileWriter = new FileWriter(commitFile)) {
             fileWriter.write(new Gson().toJson(commitDB));
+            return commitEntity.getId().toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

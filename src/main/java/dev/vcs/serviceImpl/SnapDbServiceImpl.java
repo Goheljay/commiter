@@ -1,9 +1,15 @@
 package dev.vcs.serviceImpl;
 
-import dev.vcs.entity.SnapshotDetailsEntity;
+import com.google.gson.Gson;
+import dev.vcs.entity.sanpshot.SnapDb;
+import dev.vcs.entity.sanpshot.SnapshotDetailsEntity;
 import dev.vcs.service.SnapDbService;
+import dev.vcs.utils.UtilsEnums;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +24,32 @@ public class SnapDbServiceImpl implements SnapDbService {
     }
 
     @Override
-    public void addFirstFlowOfFiles(String path, SnapshotDetailsEntity snapShotDbDto) {
+    public void addFirstFlowOfFiles(String path, String commitId, String branchId) {
         List<String> projectFileSnapshot = getProjectFileSnapshot(path);
-        generateSnapShotDBFile(path, snapShotDbDto);
+        SnapshotDetailsEntity snapshotDetailsEntity = new SnapshotDetailsEntity(projectFileSnapshot,branchId, commitId);
+        generateSnapShotDBFile(path, snapshotDetailsEntity);
     }
 
     private void generateSnapShotDBFile(String path, SnapshotDetailsEntity snapShotDbDto) {
+        SnapDb snapDb;
+        File snapFile = new File(path + UtilsEnums.COMMITER_ROUTE +"/snapDb.json");
+        try {
+            if (!snapFile.exists()) {
 
+                snapFile.createNewFile();
+                snapDb = new SnapDb();
+            } else {
+                snapDb = new Gson().fromJson(Files.readString(snapFile.toPath()), SnapDb.class);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        snapDb.addCommit(snapShotDbDto);
+        try (FileWriter fileWriter = new FileWriter(snapFile)) {
+            fileWriter.write(new Gson().toJson(snapDb));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private List<String> getProjectFileSnapshot(String path) {
