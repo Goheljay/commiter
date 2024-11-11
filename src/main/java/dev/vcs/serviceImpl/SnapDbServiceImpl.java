@@ -32,7 +32,7 @@ public class SnapDbServiceImpl implements SnapDbService {
 
     private void generateSnapShotDBFile(String path, SnapshotDetailsEntity snapShotDbDto) {
         SnapDb snapDb;
-        File snapFile = new File(path + UtilsEnums.COMMITER_ROUTE +"/snapDb.json");
+        File snapFile = new File(path + UtilsEnums.COMMITER_ROUTE.getValue() + UtilsEnums.SNAP_DB_ROUTE);
         try {
             if (!snapFile.exists()) {
 

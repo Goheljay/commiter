@@ -25,14 +25,14 @@ public class RepoServiceImpl implements RepoService {
         FileRService fileRService = FileRServiceImpl.getInstance();
         //created .commiter Folder
         dirService.createFolder(path, ".commiter");
-        var rootPath = path+ UtilsEnums.COMMITER_ROUTE;
+        var rootPath = path+ UtilsEnums.COMMITER_ROUTE.getValue();
         // create Branch
         BranchService branchService = BranchServiceImpl.getInstance();
         String branchId = branchService.createBranch(rootPath);
         //create Branches folder
         dirService.createFolder(rootPath, UtilsEnums.BRANCHES.getValue());
         //create branchId Folder
-        dirService.createFolder(rootPath+UtilsEnums.BRANCHES_ROUTE, branchId);
+        dirService.createFolder(rootPath+UtilsEnums.BRANCHES_ROUTE.getValue(), branchId);
         //create Diff Folder
         dirService.createFolder(rootPath, UtilsEnums.DIFFS.getValue());
         //create CommitDb File

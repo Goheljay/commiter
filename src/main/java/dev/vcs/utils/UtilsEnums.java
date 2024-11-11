@@ -6,7 +6,8 @@ public enum UtilsEnums {
     BRANCHES_ROUTE("/branches"),
     BRANCHES("branches"),
     DIFFS_ROUTE("/diffs"),
-    DIFFS("diffs");
+    DIFFS("diffs"),
+    SNAP_DB_ROUTE("/snapDb.json");
 
     private final String value;
 
