@@ -25,7 +25,7 @@ public class SnapDbServiceImpl implements SnapDbService {
 
     @Override
     public void addFirstFlowOfFiles(String path, String commitId, String branchId) {
-        List<String> projectFileSnapshot = getProjectFileSnapshot(path);
+        List<String> projectFileSnapshot = this.getProjectFileSnapshot(path);
         SnapshotDetailsEntity snapshotDetailsEntity = new SnapshotDetailsEntity(projectFileSnapshot,branchId, commitId);
         generateSnapShotDBFile(path, snapshotDetailsEntity);
     }
@@ -52,7 +52,8 @@ public class SnapDbServiceImpl implements SnapDbService {
         }
     }
 
-    private List<String> getProjectFileSnapshot(String path) {
+    @Override
+    public List<String> getProjectFileSnapshot(String path) {
         List<String> filePaths = getProjectFilesPath(path);
         List<String> unwantedPaths = new ArrayList<>();
         filePaths.forEach(s -> {

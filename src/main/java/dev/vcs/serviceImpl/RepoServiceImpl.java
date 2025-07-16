@@ -1,11 +1,15 @@
 package dev.vcs.serviceImpl;
 
+import dev.vcs.entity.FileDiffModal;
 import dev.vcs.entity.commit.CommitEntity;
 import dev.vcs.entity.RepoEntity;
 import dev.vcs.service.*;
 import dev.vcs.utils.UtilsEnums;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 public class RepoServiceImpl implements RepoService {
@@ -35,16 +39,43 @@ public class RepoServiceImpl implements RepoService {
         dirService.createFolder(rootPath+"/branches", branchId);
         //create Diff Folder
         dirService.createFolder(rootPath, UtilsEnums.DIFFS.getValue());
+
         //create CommitDb File
-        CommitEntity commitEntity = generateCommit(branchId);
         CommitService commitService = CommitServiceImpl.getInstance();
+        CommitEntity commitEntity = generateCommit(branchId);
         String commitId = commitService.initialCommit(rootPath, commitEntity);
-        //create Repo File
-        RepoEntity repoEntity = generateRepoEntity(creatorName, branchId, commitId);
-        fileRService.createRepoFile(rootPath, repoEntity);
+
         //Manage the SnapDbJson file
         SnapDbService snapDbService = SnapDbServiceImpl.getInstance();
         snapDbService.addFirstFlowOfFiles(path, branchId, commitId);
+
+
+        List<String> filePaths = snapDbService.getProjectFileSnapshot(rootPath);
+
+
+        //after generate snapshot create diff modal
+        // Iterate filePaths from snapshot of initial commit for creating fileDiff
+        try {
+            for (String filePath : filePaths) {
+                // Read the content from the project for each file
+                String diff = Files.readString(Path.of(rootPath + filePath));
+
+                // Create an initial Diff model for filePath
+                FileDiffModal initialDiff = new FileDiffModal(diff, branchId, commitId, true);
+                // Create DiffDB for the filePath and adds initialDiff to it
+                dirService.addFileDiff(rootPath, filePath, initialDiff);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        //create Repo File
+        //TODO: Once all task complete comment out it.
+        RepoEntity repoEntity = generateRepoEntity(creatorName, branchId, commitId);
+        fileRService.createRepoFile(rootPath, repoEntity);
+        //Manage the SnapDbJson file
+//        SnapDbService snapDbService = SnapDbServiceImpl.getInstance();
+//        snapDbService.addFirstFlowOfFiles(path, branchId, commitId);
     }
 
     private RepoEntity generateRepoEntity(String creatorName, String branch, String commitId) {

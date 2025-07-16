@@ -7,12 +7,12 @@ import java.util.UUID;
 
 public class FileDiffModal {
     private String id;
-    private ArrayList<String> diff;
+    private String diff;
     private String branchId;
     private String commitId;
     private Boolean isInitCommit;
 
-    public FileDiffModal(ArrayList<String> diff, String branchId, String commitId, Boolean isInitCommit) {
+    public FileDiffModal(String diff, String branchId, String commitId, Boolean isInitCommit) {
         this.id = MyUtils.generateSnapId(branchId, commitId);;
         this.diff = diff;
         this.branchId = branchId;
@@ -39,11 +39,11 @@ public class FileDiffModal {
         this.id = id;
     }
 
-    public ArrayList<String> getDiff() {
+    public String getDiff() {
         return diff;
     }
 
-    public void setDiff(ArrayList<String> diff) {
+    public void setDiff(String diff) {
         this.diff = diff;
     }
 
